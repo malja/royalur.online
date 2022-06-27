@@ -1,0 +1,29 @@
+{
+  "name": "royal-game-of-ur",
+  "version": "0.1.0",
+  "description": "Implementation of Royal Game Of Ur in Node.js, ExpressJS and WebSockets",
+  "author": "Jan Malčák",
+  "license": "MIT",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "nodemon ./app.js"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "cookies-parser": "^1.2.0",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "knex": "^2.1.0",
+    "morgan": "~1.9.1",
+    "nodemailer": "^6.7.5",
+    "pg": "^8.7.3",
+    "pug": "2.0.0-beta11",
+    "query-string": "^7.1.1",
+    "ws": "^8.8.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  }
+}

@@ -1,0 +1,18 @@
+include mixins/player_ingame
+
+doctype html
+head
+    title Game #{token}
+
+    div
+        header
+            h1 Game #{token}
+        aside.player_1
+            +player_ingame(player_1)
+        main#game
+            canvas
+        aside.player_2
+            +player_ingame(player_2)
+        button#roll Roll
+
+script(src="/public/javascript/client.js").

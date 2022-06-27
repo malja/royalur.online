@@ -1,0 +1,36 @@
+/*
+https://hexwords.netlify.app
+ */
+
+.flash {
+  animation: popout 1s ease;
+}
+
+.flash.error {
+  border: 1px solid #D05;
+}
+
+.flash.info {
+  border: 1px solid #71CCED;
+}
+
+.flash.success {
+  border: 1px solid #5AFE57;
+}
+
+@keyframes popout {
+  from {
+    transform: scale(0);
+  }
+  80% {
+    transform: scale(1.1);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+#game canvas {
+  width: 100%;
+  object-fit: contain;
+}
