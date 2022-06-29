@@ -1,8 +1,0 @@
-mixin flash(type, title, message)
-    case type
-        when "error"
-        when "success"
-        when "info"
-            .flash.#{type}
-                h3= title
-                p= message

@@ -1,0 +1,14 @@
+extends ./layouts/layout.pug
+
+block header
+    h2 Logout
+
+block content
+    p You will be logged out of you account and redirected back to the main page.
+
+    - var url = index_url;
+
+    script(type="text/javascript").
+        setTimeout(() => {
+            window.location.replace(url)
+        }, 5000);

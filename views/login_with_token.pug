@@ -1,0 +1,18 @@
+extends ./layouts/layout.pug
+
+block header
+    h1 Login
+    p Welcome back
+
+block content
+    if status === "success"
+        h2 Login sucessful
+        p Redirecting to main page.
+
+        script(type="text/javascript").
+            window.location.replace("http://localhost:3000/");
+
+    else
+        h2 Error while logging in
+        p Unable to login you in the game. Maybe #[a(href="/login") try again].
+

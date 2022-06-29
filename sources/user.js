@@ -1,4 +1,7 @@
 // https://grammar.yourdictionary.com/parts-of-speech/adjectives/list-of-adjective-words.html
+import db from "../db.js";
+import {nowToTimestamp} from "./tools.js";
+
 const username_adjectives = [
     "adorable","adventurous","aggressive","agreeable","alert","alive","amused","angry","annoyed","annoying","anxious",
     "arrogant","ashamed","attractive","average","awful","bad","beautiful","better","bewildered","black","bloody","blue",
@@ -59,5 +62,31 @@ export function createUserName() {
 }
 
 export async function getTopUsers(db) {
-    return db("users").select(["name", "elo"]).orderBy("elo", "DESC").limit(10);
+    return db("users").withSchema("public")
+        .select(["name", "elo", "winrate", "number_of_games"])
+        .orderBy("elo", "DESC")
+        .limit(10);
+}
+
+export async function checkToken(token, db) {
+    return db("user_tokens").withSchema("public")
+        .select("*")
+        .where({token: token})
+        .andWhere((b) => {
+            b.where((builder) => {
+                // Token nebyl použit a zároveň je ještě v limitu použití na první přihlášení
+                builder.where({used: false}).andWhere("first_login_until", "<=", nowToTimestamp());
+            }).orWhere((builder) => {
+                // Token byl použit, a jeho použitelnost je stále v limitu pro opakované přihlášení
+                builder.where({used: true}).andWhere("active_until", "<=", nowToTimestamp());
+            });
+        })
+        .orderBy("created_at", "DESC")
+        .limit(1);
+}
+
+export async function getUserFromToken(token, db) {
+    return db("user_tokens").withSchema("public")
+        .select(["user_tokens.token as token"])
+        .where("user_tokens");
 }

@@ -41,7 +41,7 @@ Podle jakých pravidel by se hru mělo hrát nebylo jasné až do roku 1980. V t
 ![Herní schéma](http://matthewdeutsch.com/projects/game-of-ur/board.png)
 Obrázek převzat z: [Matther Deutsch](http://matthewdeutsch.com/projects/game-of-ur/)
 
-- Pole označené hvězdicí (na schématu jde o pozice D, H a N) jsou "bezpečná". Oponentův kámen na tomto poli nejde vyhodit.
+- Pole označené hvězdicí (na schématu jde o pozice D, H a N) jsou "bezpečná". Oponentův kámen na tomto poli nejde vyhodit. Zároveň hráč, který skočí na dané pole má možnost házet ještě jednou.
 
 # Implementace
 

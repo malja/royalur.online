@@ -1,41 +1,40 @@
-extends index
-include mixins/flash
+extends layouts/layout
 
-h2 Login With Email
-p This game implements logging in with email address. Link with login link will be sent to your email address.
+block header
+    h2 Login With Email
+    p This game implements logging in with email address. Link with login link will be sent to your email address.
 
-- var flash = null;
+block content
 
-if flash
-    +flash(flash.type, flash.title, flash.message)
+    form(method="POST" action="/api/users/login" id="login")
+        input(type="email" id="login-email" name="email" placeholder="E-mail address...")
+        input(type="submit" value="Send login e-mail")
 
-form(method="POST" action="/api/login" id="login")
-    input(type="email" id="login-email" name="email" placeholder="E-mail address...")
-    input(type="submit" value="Send login e-mail")
+    script(type="text/javascript").
+        document.addEventListener("DOMContentLoaded", () => {
+            console.log("loaded");
+            document.querySelector("#login").addEventListener("submit", (event) => {
+                console.log("clicked");
+                event.preventDefault();
 
-script(type="text/javascript").
-    document.addEventListener("DOMContentLoaded", () => {
-        document.querySelector("#login").addEventListener("onsubmit", (it) => {
-            it.preventDefault();
-
-            fetch(it.getAttribute("action"), {
-                method: it.getAttribute("method"),
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    "email": document.querySelector("#login-email").value
+                fetch(event.target.getAttribute("action"), {
+                    method: event.target.getAttribute("method"),
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        "email": document.querySelector("#login-email").value
+                    })
                 })
-            })
-                .then(response => {
-                    flash = {
-                        type: "success",
-                        title: "Link sent successfully!",
-                        message: "Check you email address. You should have received an email with login link. Click the link and start playing!"
-                    };
-                })
-                .catch(error => {
-                    console.error(error);
-                })
+                    .then(response => {
+                        console.log ({
+                            type: "success",
+                            title: "Link sent successfully!",
+                            message: "Check you email address. You should have received an email with login link. Click the link and start playing!"
+                        });
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            });
         });
-    });

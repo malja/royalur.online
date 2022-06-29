@@ -1,0 +1,9 @@
+mixin show_flash(flash)
+    if flash !== null
+        case flash.type
+            when "error"
+            when "success"
+            when "info"
+                .flash_message
+                    h3= flash.title
+                    p= flash.message

@@ -1,0 +1,58 @@
+extends ./layouts/layout.pug
+include ./mixins/show_flash.pug
+
+block header
+    h1 Start New Game
+
+block content
+
+    - var flash = null
+
+    h2 Configuration
+
+    +show_flash(flash)
+
+    p Please configure your game before starting it.
+
+    form(id="config" action="/api/games" method="post")
+        label(for="public" alt="Public games are listed on main page, so anybody can connect.") Public
+        input(type="checkbox" name="public" id="public")
+
+        input(type="submit" value="Start")
+
+    script(type="text/javascript").
+        document.addEventListener("DOMContentLoaded", () => {
+           document.querySelector("#config").addEventListener("submit", (event) => {
+              event.preventDefault();
+
+              fetch(event.target.getAttribute("action"), {
+                  method: event.target.getAttribute("method"),
+                  headers: {
+                      "Content-Type": "application/json"
+                  },
+                  body: JSON.stringify({
+                      "public": document.querySelector("#public").value
+                  })
+              }).then(response => {
+                  flash = {
+                      type: "success",
+                      title: "Game Created",
+                      message: "You will be promptly redirected to your game."
+                  };
+
+                  console.log({
+                      type: "success",
+                      title: "Game created successfully."
+                  }, response);
+
+              }).catch(error => {
+                  flash = {
+                      type: "error",
+                      title: "Error",
+                      message: error
+                  };
+
+                 console.error(error);
+              });
+           });
+        });
